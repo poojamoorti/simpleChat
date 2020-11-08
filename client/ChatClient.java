@@ -49,9 +49,10 @@ public class ChatClient extends AbstractClient
   
   //Instance methods ************************************************
   
+ // for question 1a - responds to shutdown of server by printing a message to client
   @Override
   public void connectionClosed() {
-      System.out.println("Connection Closed to Server.");
+      System.out.println("Connection to Server is now closed.");
   }
 
   /**
@@ -59,7 +60,7 @@ public class ChatClient extends AbstractClient
    */
   @Override
   public void connectionException(Exception exception) {
-      System.out.println("The server has now shut down. The application is now quitting");
+      System.out.println("The server has now shut down. The application is now quitting.");
       quit();
   }
   
