@@ -80,19 +80,41 @@ public class ChatClient extends AbstractClient
    *
    * @param message The message from the UI.    
    */
-  public void handleMessageFromClientUI(String message)
-  {
-    try
-    {
-      sendToServer(message);
-    }
-    catch(IOException e)
-    {
-      clientUI.display
-        ("Could not send message to server.  Terminating client.");
-      quit();
-    }
-  }
+  public void handleMessageFromClientUI(String message) {
+	  if (message.charAt(0) == '#') {
+		  //for #quit command
+		  if (message.equalsIgnoreCase("#quit"))
+		    {
+		      quit();
+		    }
+		  //for #logoff command
+		  else if (message.equalsIgnoreCase("#logoff")) {
+		      try {
+		        closeConnection();
+		      }
+		      catch(IOException e) {}
+		      clientUI.display("You have logged off.");
+		    }
+		  //for #gethost command
+		  else if (message.equalsIgnoreCase("#gethost")) {
+		      clientUI.display("Current host: " + getHost());
+		      }
+		  //for #getport command
+		  else if (message.equalsIgnoreCase("#getport")) {
+			  clientUI.display("Current port: " + Integer.toString(getPort()));
+			  }
+		  
+	  }
+	  else {
+		  try {
+			  sendToServer(message);
+			  }
+		  catch(IOException e) {
+			  clientUI.display("Could not send message to server.  Terminating client.");
+			  quit();
+			  }
+		  }
+	  }
   
   /**
    * This method terminates the client.
